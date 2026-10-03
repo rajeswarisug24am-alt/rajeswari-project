@@ -1,0 +1,346 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React Week 2 Practice</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
+
+    section {
+      background: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px #ccc;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    button {
+      padding: 8px 15px;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+      background: blue;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: darkblue;
+    }
+
+    input {
+      padding: 10px;
+      width: 250px;
+      margin-right: 5px;
+    }
+
+    nav {
+      margin-bottom: 15px;
+    }
+
+    nav button {
+      background: #333;
+    }
+
+    li {
+      margin: 10px;
+    }
+
+    .active-page {
+      color: blue;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="root"></div>
+
+<!-- React CDN -->
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+
+const { useState } = React;
+
+
+/* =====================================
+   PRACTICE 1
+   Create a React component showing
+   product information
+===================================== */
+
+function ProductInfo() {
+  return (
+    <section>
+      <h2>Practice 1: Product Information</h2>
+
+      <h3>Laptop</h3>
+      <p>Price: ₹50,000</p>
+      <p>Brand: Dell</p>
+    </section>
+  );
+}
+
+
+/* =====================================
+   PRACTICE 2
+   Props and State
+===================================== */
+
+function ProductProps({ name, price }) {
+
+  const [quantity, setQuantity] = useState(1);
+
+  return (
+    <section>
+      <h2>Practice 2: Props and State</h2>
+
+      <h3>{name}</h3>
+
+      <p>Price: ₹{price}</p>
+
+      <p>Quantity: {quantity}</p>
+
+      <button
+        onClick={() => setQuantity(quantity + 1)}
+      >
+        Add
+      </button>
+
+      <button
+        onClick={() =>
+          setQuantity(quantity > 1 ? quantity - 1 : 1)
+        }
+      >
+        Remove
+      </button>
+    </section>
+  );
+}
+
+
+/* =====================================
+   PRACTICE 3
+   To-Do App
+===================================== */
+
+function TodoApp() {
+
+  const [task, setTask] = useState("");
+
+  const [tasks, setTasks] = useState([]);
+
+  function addTask() {
+
+    if (task.trim() === "") {
+      return;
+    }
+
+    setTasks([...tasks, task]);
+
+    setTask("");
+  }
+
+  function deleteTask(index) {
+
+    setTasks(
+      tasks.filter((_, i) => i !== index)
+    );
+  }
+
+  return (
+    <section>
+
+      <h2>Practice 3: To-Do App</h2>
+
+      <input
+        type="text"
+        placeholder="Enter a task"
+        value={task}
+        onChange={(e) => setTask(e.target.value)}
+      />
+
+      <button onClick={addTask}>
+        Add Task
+      </button>
+
+      <ul>
+
+        {tasks.map((item, index) => (
+
+          <li key={index}>
+
+            {item}
+
+            <button
+              onClick={() => deleteTask(index)}
+            >
+              Delete
+            </button>
+
+          </li>
+
+        ))}
+
+      </ul>
+
+    </section>
+  );
+}
+
+
+/* =====================================
+   PRACTICE 4
+   Multi-page Navigation
+===================================== */
+
+function Navigation() {
+
+  const [page, setPage] = useState("home");
+
+  return (
+    <section>
+
+      <h2>Practice 4: Multi-Page Navigation</h2>
+
+      <nav>
+
+        <button onClick={() => setPage("home")}>
+          Home
+        </button>
+
+        <button onClick={() => setPage("about")}>
+          About
+        </button>
+
+        <button onClick={() => setPage("contact")}>
+          Contact
+        </button>
+
+      </nav>
+
+      {page === "home" && (
+        <div>
+          <h3>Home Page</h3>
+          <p>Welcome to the Home Page.</p>
+        </div>
+      )}
+
+      {page === "about" && (
+        <div>
+          <h3>About Page</h3>
+          <p>This is the About Page.</p>
+        </div>
+      )}
+
+      {page === "contact" && (
+        <div>
+          <h3>Contact Page</h3>
+          <p>Email: example@gmail.com</p>
+        </div>
+      )}
+
+    </section>
+  );
+}
+
+
+/* =====================================
+   PRACTICE 5
+   CSS Modules-style Component
+===================================== */
+
+function StyledButton() {
+
+  return (
+    <section>
+
+      <h2>Practice 5: Styled Component</h2>
+
+      <button
+        style={{
+          backgroundColor: "blue",
+          color: "white",
+          padding: "10px 20px",
+          border: "none",
+          borderRadius: "5px",
+          cursor: "pointer"
+        }}
+      >
+        Click Me
+      </button>
+
+    </section>
+  );
+}
+
+
+/* =====================================
+   MAIN APP
+===================================== */
+
+function App() {
+
+  return (
+    <div className="container">
+
+      <h1>Week 2 React Practice</h1>
+
+      <ProductInfo />
+
+      <ProductProps
+        name="Laptop"
+        price="50,000"
+      />
+
+      <TodoApp />
+
+      <Navigation />
+
+      <StyledButton />
+
+    </div>
+  );
+}
+
+
+/* =====================================
+   RENDER APP
+===================================== */
+
+const root = ReactDOM.createRoot(
+  document.getElementById("root")
+);
+
+root.render(<App />);
+
+</script>
+
+</body>
+</html>
+```
